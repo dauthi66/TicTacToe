@@ -26,17 +26,11 @@ class MainActivity : AppCompatActivity() {
         val  button8 = findViewById<Button>(R.id.button8)
         val  button9 = findViewById<Button>(R.id.button9)
 
-        //setup necessary on click functions
-        setupOnClick(button1)
-        setupOnClick(button2)
-        setupOnClick(button3)
-        setupOnClick(button4)
-        setupOnClick(button5)
-        setupOnClick(button6)
-        setupOnClick(button7)
-        setupOnClick(button8)
-        setupOnClick(button9)
-
+        val buttons = arrayOf(button1, button2, button3, button4, button5, button6,
+                                button7, button8, button9)
+        buttons.forEach {
+            setupOnClick(it)
+        }
     }
 
     private fun setupNewGameButton(newGameButton: Button?) {
