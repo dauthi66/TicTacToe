@@ -90,7 +90,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="132dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/playerX"
+        android:text="@string/playerTurn"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/new_game"
         app:layout_constraintEnd_toEndOf="parent"
