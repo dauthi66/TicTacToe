@@ -4,4 +4,6 @@
     <string name="new_game">New Game</string>
     <string name="player_one_marker">X</string>
     <string name="player_two_marker">O</string>
+    <string name="tie_game">Uh Oh! Tie Game!</string>
+    <string name="win_game">Player %s WINS!</string>
 </resources>

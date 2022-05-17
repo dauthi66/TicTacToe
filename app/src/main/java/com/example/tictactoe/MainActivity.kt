@@ -81,39 +81,47 @@ class MainActivity : AppCompatActivity() {
                     button.isClickable = false
 
                     //check for player1 wins
-                    checkWin(buttonRows, playerOneMarker)
-                    checkWin(buttonColumns, playerOneMarker)
-                    checkWin(buttonDiagonals, playerOneMarker)
+                    checkWinOrTie(buttonRows, playerOneMarker)
+                    checkWinOrTie(buttonColumns, playerOneMarker)
+                    checkWinOrTie(buttonDiagonals, playerOneMarker)
                     //check for player 2 wins
-                    checkWin(buttonRows, playerTwoMarker)
-                    checkWin(buttonColumns, playerTwoMarker)
-                    checkWin(buttonDiagonals, playerTwoMarker)
+                    checkWinOrTie(buttonRows, playerTwoMarker)
+                    checkWinOrTie(buttonColumns, playerTwoMarker)
+                    checkWinOrTie(buttonDiagonals, playerTwoMarker)
 
-                    //TODO: implement tie logic
-                    //TODO: lock game on win
+                    //TODO: make it so you can't flip the screen
                 }
             }
         }
-
     }
 
-    private fun checkWin(buttons : Array<Array<Button>>, player : String): Boolean {
+    private fun checkWinOrTie(buttons : Array<Array<Button>>, player : String) {
+        //find turn display
+        val playerTurn = findViewById<TextView>(R.id.textView)
+        //track used buttons
+        var usedButtons = 0
+
         for (arrays in buttons) {
             //reset on new row
             var matchCount = 0
             for (button in arrays) {
-                //tally X's in row
+                if (button.text.isNotEmpty()) {
+                    usedButtons++
+                }
+                //tally marked buttons in row
                 if (button.text == player) {
                     matchCount++
                     if (matchCount == 3) {
-                        val playerTurn = findViewById<TextView>(R.id.textView)
-                        playerTurn.text = "Player " + player + " WINS!" //TODO: remove hardcode
-                        return true
+                        playerTurn.text = getString(R.string.win_game, player)
+                        disableButtons(buttons)
                     }
                 }
             }
+            //check for tie game (all buttons used)
+            if (usedButtons == buttons.size * buttons[0].size) {
+                playerTurn.text = getString(R.string.tie_game)
+            }
         }
-        return false;
     }
 
     private fun createButtonColumns(buttonRows : Array<Array<Button>>) : Array<Array<Button>> {
@@ -125,10 +133,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun createButtonDiagonals(buttons: Array<Array<Button>>): Array<Array<Button>> {
+    private fun createButtonDiagonals(buttonRows: Array<Array<Button>>): Array<Array<Button>> {
         return arrayOf(
-            arrayOf(buttons[0][0], buttons[1][1], buttons[2][2]),
-            arrayOf(buttons[0][2], buttons[1][1], buttons[2][0]),
+            arrayOf(buttonRows[0][0], buttonRows[1][1], buttonRows[2][2]),
+            arrayOf(buttonRows[0][2], buttonRows[1][1], buttonRows[2][0]),
         )
+    }
+
+    private fun disableButtons(buttons : Array<Array<Button>>) {
+        for (arrays in buttons) {
+            for (button in arrays) {
+                if (button.isClickable) {
+                    button.isClickable = false
+                }
+            }
+        }
     }
 }
